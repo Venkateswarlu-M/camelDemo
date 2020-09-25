@@ -1,5 +1,6 @@
 package com.example.cameldemo.routes;
 
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,15 +29,26 @@ public class CustomerRoute extends RouteBuilder {
 
 	@Value("${customer-inventory-service.produces}")
 	private String produces;
+	
+	@Value("${customer-inventory-service.validations.customer-input-validation}")
+	private String customerInputValidation;
 
 	@Override
 	public void configure() throws Exception {
 		restConfiguration().component(componentName).bindingMode(RestBindingMode.off)
 				.dataFormatProperty("prettyPrint", "true").host(host).port(port);
 		rest(customerInputPath).post().consumes(consumes).produces(produces).route().convertBodyTo(String.class)
+				.to("validator:"+customerInputValidation)
 				.process(exchange -> {
 					System.out.println(exchange.getIn().getBody());
-				}).end();
+					exchange.getIn().setHeader(Exchange.HTTP_METHOD, "GET");
+				})
+				.to("http://localhost:3000/customer?bridgeEndpoint=true")
+				.process(exchange -> {
+					System.out.println(exchange.getIn().getBody(String.class));
+				})
+				.end();
+		
 
 	}
 }

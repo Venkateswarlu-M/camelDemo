@@ -16,4 +16,4 @@ customer-inventory-service:
   url: http://localhost:8081/customers
   input-path: /customer
   validations:
-    customer-input-validation: routings/customer-schemas/customer.xsd
+    customer-input-validation: routings/customer/customer.xsd
