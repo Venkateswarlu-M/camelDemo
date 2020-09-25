@@ -122,10 +122,10 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-			<!-- <plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxb2-maven-plugin</artifactId>
-				<version>1.6</version>
+				<!-- <version>1.6</version> -->
 				<executions>
 					<execution>
 						<id>xjc-schema1</id>
@@ -139,11 +139,11 @@
 					</schemaDirectory>
 					<schemaFiles>customer.xsd</schemaFiles>
 					<sources>
-						<source>src/main/routings/customer/customer.xsd</source>
+						<source>src/main/resources/routings/customer/customer.xsd</source>
 					</sources>
 					<packageName>com.example.cameldemo</packageName>
 				</configuration>
-			</plugin> -->
+			</plugin>
 		</plugins>
 	</build>
 
