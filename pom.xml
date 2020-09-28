@@ -52,6 +52,11 @@
 			<artifactId>camel-http</artifactId>
 			<version>${camel.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jackson</artifactId>
+			<version>${camel.version}</version>
+		</dependency>
 
 
 		<!-- Camel Dependencies End -->
@@ -112,6 +117,7 @@
 				<configuration>
 					<source>1.8</source> <!-- depending on your project -->
 					<target>1.8</target> <!-- depending on your project -->
+					<generatedSourcesDirectory>build/generated/annotations/src/main/java</generatedSourcesDirectory>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.mapstruct</groupId>
@@ -137,11 +143,12 @@
 				<configuration>
 					<schemaDirectory>src/main/resources/routings/customer
 					</schemaDirectory>
-					<schemaFiles>customer.xsd</schemaFiles>
+					 <schemaFiles>customer-request.xsd</schemaFiles>
 					<sources>
-						<source>src/main/resources/routings/customer/customer.xsd</source>
+						<source>src/main/resources/routings/customer/customer-request.xsd</source>
 					</sources>
-					<packageName>com.example.cameldemo</packageName>
+					<packageName>com.example.cameldemo.customer</packageName>
+					 <outputDirectory>build/generated/jaxb/src/main/java</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
