@@ -5,7 +5,8 @@
         <xs:element type="xs:string" name="customerName"/>
         <xs:element type="xs:string" name="customerId"/>
         <xs:element type="xs:string" name="country"/>
-        <xs:element type="xs:string" name="street"/>
+        <xs:element type="xs:string" name="state"/>
+        <xs:element type="xs:string" name="city"/>
         <xs:element type="xs:string" name="pincode"/>
       </xs:sequence>
     </xs:complexType>

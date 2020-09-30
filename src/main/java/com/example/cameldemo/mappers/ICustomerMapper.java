@@ -21,8 +21,9 @@ public interface ICustomerMapper {
 	@Mapping(target="customerName", source= "customerName")
 	@Mapping(target="customerId", source= "customerId")
 	@Mapping(target="customerAddress.country", source= "country")
-	@Mapping(target="customerAddress.street", source= "street")
+	@Mapping(target="customerAddress.state", source= "state")
+	@Mapping(target="customerAddress.city", source= "city")
 	@Mapping(target="customerAddress.pincode", source= "pincode")
-	CustomerPaymentRequest map(final CustomerRequest customerRequest);
+	CustomerPaymentRequest map(final  CustomerRequest customerRequest);
 }
 
