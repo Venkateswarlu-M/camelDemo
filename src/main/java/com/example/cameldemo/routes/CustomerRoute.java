@@ -83,7 +83,17 @@ public class CustomerRoute extends RouteBuilder {
 					exchange.getIn().setBody(customerPaymentRequest, CustomerPaymentRequest.class);
 				}).marshal().json(JsonLibrary.Jackson).process(exchange -> {
 					System.out.println(exchange.getIn().getBody(String.class));
-				}).to("http://localhost:3000/customer?bridgeEndpoint=true").unmarshal()
+				}).multicast().parallelProcessing().to("direct:callRestEndpoint1","direct:callRestEndpoint2");
+		
+				from("direct:callRestEndpoint1").to("http://localhost:3000/customer?bridgeEndpoint=true").unmarshal()
+				.json(JsonLibrary.Jackson, CustomerPaymentRequest.class).process(exchange -> {
+					CustomerPaymentRequest customerPaymentRequest = exchange.getIn()
+							.getBody(CustomerPaymentRequest.class);
+					CustomerResponse customerResponse = customerResponseMapper.map(customerPaymentRequest);
+					exchange.getIn().setBody(customerResponse, CustomerResponse.class);
+				}).marshal().jacksonxml(CustomerResponse.class).to("validator:" + customerResponseValidation).end();
+				
+				from("direct:callRestEndpoint2").to("http://localhost:3001/customer?bridgeEndpoint=true").unmarshal()
 				.json(JsonLibrary.Jackson, CustomerPaymentRequest.class).process(exchange -> {
 					CustomerPaymentRequest customerPaymentRequest = exchange.getIn()
 							.getBody(CustomerPaymentRequest.class);
