@@ -1,8 +1,14 @@
 spring:
   application:
     name: camel-demo
+    server: 8081 
   main:
     allow-bean-definition-overriding: true
+  datasource:
+    driver-class-name : com.microsoft.sqlserver.jdbc.SQLServerDriver
+    jdbc-url: jdbc:sqlserver://NANSINHA-In:1433;databaseName=localdb
+    username: localhost
+    password: admin
 camel:
   springboot:
     main-run-controller: true
@@ -10,11 +16,15 @@ customer-inventory-service:
   rest-config:
     component-name: jetty
     host: 0.0.0.0
-    port: 8888
+    port: 8088
   consumes: application/xml
   produces: application/json
-  url: http://localhost:8081/customers
+  url: http://localhost:3000/customers
   input-path: /customer
   validations:
     customer-request-validation: routings/customer/customer-request.xsd
     customer-response-validation: routings/customer/customer-response.xsd
+
+
+
+ 
